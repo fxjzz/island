@@ -124,7 +124,11 @@ async function bundle(root) {
         rollupOptions: {
           input: isServer ? SSR_ENTRY_PATH : CLIENT_ENTRY_PATH,
           output: {
+<<<<<<< HEAD
             format: "esm"
+=======
+            format: isServer ? "cjs" : "esm"
+>>>>>>> f47fe2c4ca4944e5e61d39b57018123fa2e57699
           }
         }
       }
