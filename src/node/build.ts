@@ -2,7 +2,8 @@ import { InlineConfig, build as viteBuild } from 'vite'
 import { CLIENT_ENTRY_PATH, SSR_ENTRY_PATH } from './constants'
 import type { RollupOutput } from 'rollup'
 import { join } from 'path'
-import * as fs from 'fs-extra'
+import fs from 'fs-extra'
+import { pathToFileURL } from 'url'
 
 export async function bundle(root: string) {
   const resolveViteConfig = (isServer: boolean): InlineConfig => {
@@ -15,7 +16,7 @@ export async function bundle(root: string) {
         rollupOptions: {
           input: isServer ? SSR_ENTRY_PATH : CLIENT_ENTRY_PATH,
           output: {
-            format: isServer ? 'cjs' : 'esm',
+            format: 'esm',
           },
         },
       },
@@ -60,7 +61,7 @@ export async function build(root: string = process.cwd()) {
   const [clientBundle, serverBundle] = await bundle(root)
 
   const serverEntryPath = join(root, '.temp', 'ssr-entry.js')
-  const { render } = require(serverEntryPath)
+  const { render } = await import(pathToFileURL(serverEntryPath).toString())
 
   await renderPage(render, root, clientBundle)
 }
