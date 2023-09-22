@@ -1,6 +1,7 @@
 import { cac } from 'cac'
 import path = require('path')
 import { createDevServer } from './dev'
+import { build } from './build'
 
 const version = require('../../package.json').version
 
@@ -17,7 +18,13 @@ cli
   })
 
 cli.command('build [root]', 'build for production').action(async (root: string) => {
-  console.log('build', root)
+  try {
+    //绝对路径
+    root = root ? path.resolve(root) : path.resolve()
+    await build(root)
+  } catch (e) {
+    console.log(e)
+  }
 })
 
 cli.parse()

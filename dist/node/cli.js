@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const cac_1 = require("cac");
 const path = require("path");
 const dev_1 = require("./dev");
+const build_1 = require("./build");
 const version = require('../../package.json').version;
 const cli = (0, cac_1.cac)('island').version(version).help();
 cli
@@ -15,6 +16,13 @@ cli
     server.printUrls();
 });
 cli.command('build [root]', 'build for production').action(async (root) => {
-    console.log('build', root);
+    try {
+        //绝对路径
+        root = root ? path.resolve(root) : path.resolve();
+        await (0, build_1.build)(root);
+    }
+    catch (e) {
+        console.log(e);
+    }
 });
 cli.parse();
