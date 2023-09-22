@@ -1,5 +1,5 @@
 import { cac } from 'cac'
-import path = require('path')
+import * as path from 'path'
 import { createDevServer } from './dev'
 import { build } from './build'
 

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc -w",
+    "start": "tsup --watch",
+    "build": "tsup",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
@@ -17,6 +18,7 @@
     "@types/fs-extra": "^11.0.2",
     "@types/node": "^20.6.3",
     "rollup": "^3.29.2",
+    "tsup": "^7.2.0",
     "typescript": "^5.2.2"
   },
   "dependencies": {
