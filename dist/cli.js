@@ -1,4 +1,4 @@
-"use strict"; function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { newObj[key] = obj[key]; } } } newObj.default = obj; return newObj; } } function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getOwnPropNames = Object.getOwnPropertyNames;
 var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
@@ -42,22 +42,29 @@ var require_package = __commonJS({
   }
 });
 
+// node_modules/.pnpm/tsup@7.2.0_typescript@5.2.2/node_modules/tsup/assets/esm_shims.js
+import { fileURLToPath } from "url";
+import path from "path";
+var getFilename = () => fileURLToPath(import.meta.url);
+var getDirname = () => path.dirname(getFilename());
+var __dirname = /* @__PURE__ */ getDirname();
+
 // src/node/cli.ts
-var _cac = require('cac');
-var _path = require('path'); var path = _interopRequireWildcard(_path);
+import { cac } from "cac";
+import * as path2 from "path";
 
 // src/node/dev.ts
-var _vite = require('vite');
+import { createServer as createViteDevServer } from "vite";
 
 // src/node/plugin-island/indexHtml.ts
-var _promises = require('fs/promises');
+import { readFile } from "fs/promises";
 
 // src/node/constants/index.ts
-
-var PACKAGE_ROOT = _path.join.call(void 0, __dirname, "..");
-var DEFAULT_TEMPLATE_PATH = _path.join.call(void 0, PACKAGE_ROOT, "template.html");
-var CLIENT_ENTRY_PATH = _path.join.call(void 0, PACKAGE_ROOT, "src", "runtime", "client-entry.tsx");
-var SSR_ENTRY_PATH = _path.join.call(void 0, PACKAGE_ROOT, "src", "runtime", "ssr-entry.tsx");
+import { join } from "path";
+var PACKAGE_ROOT = join(__dirname, "..");
+var DEFAULT_TEMPLATE_PATH = join(PACKAGE_ROOT, "template.html");
+var CLIENT_ENTRY_PATH = join(PACKAGE_ROOT, "src", "runtime", "client-entry.tsx");
+var SSR_ENTRY_PATH = join(PACKAGE_ROOT, "src", "runtime", "ssr-entry.tsx");
 
 // src/node/plugin-island/indexHtml.ts
 function pluginIndexHtml() {
@@ -83,7 +90,7 @@ function pluginIndexHtml() {
     configureServer(server) {
       return () => {
         server.middlewares.use(async (req, res, next) => {
-          let html = await _promises.readFile.call(void 0, DEFAULT_TEMPLATE_PATH, "utf-8");
+          let html = await readFile(DEFAULT_TEMPLATE_PATH, "utf-8");
           try {
             html = await server.transformIndexHtml(req.url, html);
             res.statusCode = 200;
@@ -99,19 +106,49 @@ function pluginIndexHtml() {
 }
 
 // src/node/dev.ts
-var _pluginreact = require('@vitejs/plugin-react'); var _pluginreact2 = _interopRequireDefault(_pluginreact);
+import pluginReact from "@vitejs/plugin-react";
+
+// src/node/config.ts
+import fs from "fs-extra";
+import { resolve } from "path";
+import { loadConfigFromFile } from "vite";
+function getUserConfigPath(root) {
+  try {
+    const supportConfigFiles = ["config.ts", "config.js"];
+    const configPath = supportConfigFiles.map((file) => resolve(root, file)).find(fs.pathExistsSync);
+    return configPath;
+  } catch (e) {
+    console.error(`Failed to load user config: ${e}`);
+    throw e;
+  }
+}
+async function resolveConfig(root, command, mode) {
+  const configPath = getUserConfigPath(root);
+  const result = await loadConfigFromFile({ command, mode }, configPath, root);
+  if (result) {
+    const { config: rawConfig = {} } = result;
+    const userConfig = await (typeof rawConfig === "function" ? rawConfig() : rawConfig);
+    return [configPath, userConfig];
+  } else {
+    return [configPath, {}];
+  }
+}
+
+// src/node/dev.ts
 async function createDevServer(root = process.cwd()) {
-  return _vite.createServer.call(void 0, {
+  const config = await resolveConfig(root, "serve", "development");
+  console.log(config);
+  return createViteDevServer({
     root,
-    plugins: [pluginIndexHtml(), _pluginreact2.default.call(void 0, )]
+    plugins: [pluginIndexHtml(), pluginReact()]
   });
 }
 
 // src/node/build.ts
-
-
-var _fsextra = require('fs-extra'); var _fsextra2 = _interopRequireDefault(_fsextra);
-var _url = require('url');
+import { build as viteBuild } from "vite";
+import { join as join2 } from "path";
+import fs2 from "fs-extra";
+import { pathToFileURL } from "url";
 async function bundle(root) {
   const resolveViteConfig = (isServer) => {
     return {
@@ -132,8 +169,8 @@ async function bundle(root) {
   };
   try {
     const [clientBundle, serverBundle] = await Promise.all([
-      _vite.build.call(void 0, resolveViteConfig(false)),
-      _vite.build.call(void 0, resolveViteConfig(true))
+      viteBuild(resolveViteConfig(false)),
+      viteBuild(resolveViteConfig(true))
     ]);
     return [clientBundle, serverBundle];
   } catch (e) {
@@ -157,29 +194,29 @@ async function renderPage(render, root, clientBundle) {
       <script type="module" src="${chunk.fileName}"></script>
     </body>
   </html>`.trim();
-  await _fsextra2.default.ensureDir(_path.join.call(void 0, root, "build"));
-  await _fsextra2.default.writeFile(_path.join.call(void 0, root, "build", "index.html"), html);
-  await _fsextra2.default.remove(_path.join.call(void 0, root, ".temp"));
+  await fs2.ensureDir(join2(root, "build"));
+  await fs2.writeFile(join2(root, "build", "index.html"), html);
+  await fs2.remove(join2(root, ".temp"));
 }
 async function build(root = process.cwd()) {
   const [clientBundle, serverBundle] = await bundle(root);
-  const serverEntryPath = _path.join.call(void 0, root, ".temp", "ssr-entry.js");
-  const { render } = await Promise.resolve().then(() => _interopRequireWildcard(require(_url.pathToFileURL.call(void 0, serverEntryPath).toString())));
+  const serverEntryPath = join2(root, ".temp", "ssr-entry.js");
+  const { render } = await import(pathToFileURL(serverEntryPath).toString());
   await renderPage(render, root, clientBundle);
 }
 
 // src/node/cli.ts
 var version = require_package().version;
-var cli = _cac.cac.call(void 0, "island").version(version).help();
+var cli = cac("island").version(version).help();
 cli.command("[root]", "start dev server").alias("dev").action(async (root) => {
-  root = root ? path.resolve(root) : path.resolve();
+  root = root ? path2.resolve(root) : path2.resolve();
   const server = await createDevServer(root);
   await server.listen();
   server.printUrls();
 });
 cli.command("build [root]", "build for production").action(async (root) => {
   try {
-    root = root ? path.resolve(root) : path.resolve();
+    root = root ? path2.resolve(root) : path2.resolve();
     await build(root);
   } catch (e) {
     console.log(e);
