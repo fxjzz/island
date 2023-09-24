@@ -1,10 +1,10 @@
 "use strict"; function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { newObj[key] = obj[key]; } } } newObj.default = obj; return newObj; } } function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 
-var _chunkPBS7J6PFcjs = require('./chunk-PBS7J6PF.cjs');
+var _chunkUSY3CWANcjs = require('./chunk-USY3CWAN.cjs');
 
 // package.json
-var require_package = _chunkPBS7J6PFcjs.__commonJS.call(void 0, {
+var require_package = _chunkUSY3CWANcjs.__commonJS.call(void 0, {
   "package.json"(exports, module) {
     module.exports = {
       name: "island-ssg",
@@ -100,12 +100,31 @@ function pluginIndexHtml() {
 
 // src/node/dev.ts
 var _pluginreact = require('@vitejs/plugin-react'); var _pluginreact2 = _interopRequireDefault(_pluginreact);
+
+// src/node/plugin-island/config.ts
+var SITE_DATA_ID = "island:site-data";
+function pluginConfig(config) {
+  return {
+    name: "island:config",
+    resolveId(id) {
+      if (id === SITE_DATA_ID) {
+        return "\0" + SITE_DATA_ID;
+      }
+    },
+    load(id) {
+      if (id === "\0" + SITE_DATA_ID) {
+        return `export default ${JSON.stringify(config.siteData)}`;
+      }
+    }
+  };
+}
+
+// src/node/dev.ts
 async function createDevServer(root = process.cwd()) {
-  const config = await _chunkPBS7J6PFcjs.resolveConfig.call(void 0, root, "serve", "development");
-  console.log(config);
+  const config = await _chunkUSY3CWANcjs.resolveConfig.call(void 0, root, "serve", "development");
   return _vite.createServer.call(void 0, {
     root,
-    plugins: [pluginIndexHtml(), _pluginreact2.default.call(void 0, )]
+    plugins: [pluginIndexHtml(), _pluginreact2.default.call(void 0, ), pluginConfig(config)]
   });
 }
 

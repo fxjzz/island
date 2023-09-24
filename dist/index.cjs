@@ -1,6 +1,6 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});
 
-var _chunkPBS7J6PFcjs = require('./chunk-PBS7J6PF.cjs');
+var _chunkUSY3CWANcjs = require('./chunk-USY3CWAN.cjs');
 
 
-exports.defineConfig = _chunkPBS7J6PFcjs.defineConfig;
+exports.defineConfig = _chunkUSY3CWANcjs.defineConfig;

@@ -55,6 +55,7 @@ export async function resolveConfig(
     configPath,
     siteData: resolveSiteData(userConfig as UserConfig),
   }
+  return siteConfig
 }
 
 export function defineConfig(config: UserConfig) {

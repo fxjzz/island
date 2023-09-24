@@ -2,7 +2,7 @@ import {
   __commonJS,
   __dirname,
   resolveConfig
-} from "./chunk-VM2I5ZM7.js";
+} from "./chunk-JQSZZQVD.js";
 
 // package.json
 var require_package = __commonJS({
@@ -101,12 +101,31 @@ function pluginIndexHtml() {
 
 // src/node/dev.ts
 import pluginReact from "@vitejs/plugin-react";
+
+// src/node/plugin-island/config.ts
+var SITE_DATA_ID = "island:site-data";
+function pluginConfig(config) {
+  return {
+    name: "island:config",
+    resolveId(id) {
+      if (id === SITE_DATA_ID) {
+        return "\0" + SITE_DATA_ID;
+      }
+    },
+    load(id) {
+      if (id === "\0" + SITE_DATA_ID) {
+        return `export default ${JSON.stringify(config.siteData)}`;
+      }
+    }
+  };
+}
+
+// src/node/dev.ts
 async function createDevServer(root = process.cwd()) {
   const config = await resolveConfig(root, "serve", "development");
-  console.log(config);
   return createViteDevServer({
     root,
-    plugins: [pluginIndexHtml(), pluginReact()]
+    plugins: [pluginIndexHtml(), pluginReact(), pluginConfig(config)]
   });
 }
 
