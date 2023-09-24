@@ -1,10 +1,10 @@
-"use strict"; function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { newObj[key] = obj[key]; } } } newObj.default = obj; return newObj; } } function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var __getOwnPropNames = Object.getOwnPropertyNames;
-var __commonJS = (cb, mod) => function __require() {
-  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
-};
+"use strict"; function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { newObj[key] = obj[key]; } } } newObj.default = obj; return newObj; } } function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+
+var _chunkPBS7J6PFcjs = require('./chunk-PBS7J6PF.cjs');
 
 // package.json
-var require_package = __commonJS({
+var require_package = _chunkPBS7J6PFcjs.__commonJS.call(void 0, {
   "package.json"(exports, module) {
     module.exports = {
       name: "island-ssg",
@@ -100,36 +100,8 @@ function pluginIndexHtml() {
 
 // src/node/dev.ts
 var _pluginreact = require('@vitejs/plugin-react'); var _pluginreact2 = _interopRequireDefault(_pluginreact);
-
-// src/node/config.ts
-var _fsextra = require('fs-extra'); var _fsextra2 = _interopRequireDefault(_fsextra);
-
-
-function getUserConfigPath(root) {
-  try {
-    const supportConfigFiles = ["config.ts", "config.js"];
-    const configPath = supportConfigFiles.map((file) => _path.resolve.call(void 0, root, file)).find(_fsextra2.default.pathExistsSync);
-    return configPath;
-  } catch (e) {
-    console.error(`Failed to load user config: ${e}`);
-    throw e;
-  }
-}
-async function resolveConfig(root, command, mode) {
-  const configPath = getUserConfigPath(root);
-  const result = await _vite.loadConfigFromFile.call(void 0, { command, mode }, configPath, root);
-  if (result) {
-    const { config: rawConfig = {} } = result;
-    const userConfig = await (typeof rawConfig === "function" ? rawConfig() : rawConfig);
-    return [configPath, userConfig];
-  } else {
-    return [configPath, {}];
-  }
-}
-
-// src/node/dev.ts
 async function createDevServer(root = process.cwd()) {
-  const config = await resolveConfig(root, "serve", "development");
+  const config = await _chunkPBS7J6PFcjs.resolveConfig.call(void 0, root, "serve", "development");
   console.log(config);
   return _vite.createServer.call(void 0, {
     root,
@@ -140,7 +112,7 @@ async function createDevServer(root = process.cwd()) {
 // src/node/build.ts
 
 
-
+var _fsextra = require('fs-extra'); var _fsextra2 = _interopRequireDefault(_fsextra);
 var _url = require('url');
 async function bundle(root) {
   const resolveViteConfig = (isServer) => {

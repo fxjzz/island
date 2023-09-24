@@ -1,3 +1,5 @@
-export default {
-  a: 123123,
-}
+import { defineConfig } from '../dist'
+
+export default defineConfig({
+  title: 'title',
+})

@@ -1,7 +1,8 @@
 import { defineConfig } from 'tsup'
 
 export default defineConfig({
-  entry: ['./src/node/cli.ts'],
+  entry: ['./src/node/cli.ts', './src/node/index.ts'],
+  clean: true,
   bundle: true,
   splitting: true,
   outDir: 'dist',

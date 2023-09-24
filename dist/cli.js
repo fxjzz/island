@@ -1,7 +1,8 @@
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __commonJS = (cb, mod) => function __require() {
-  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
-};
+import {
+  __commonJS,
+  __dirname,
+  resolveConfig
+} from "./chunk-VM2I5ZM7.js";
 
 // package.json
 var require_package = __commonJS({
@@ -42,16 +43,9 @@ var require_package = __commonJS({
   }
 });
 
-// node_modules/.pnpm/tsup@7.2.0_typescript@5.2.2/node_modules/tsup/assets/esm_shims.js
-import { fileURLToPath } from "url";
-import path from "path";
-var getFilename = () => fileURLToPath(import.meta.url);
-var getDirname = () => path.dirname(getFilename());
-var __dirname = /* @__PURE__ */ getDirname();
-
 // src/node/cli.ts
 import { cac } from "cac";
-import * as path2 from "path";
+import * as path from "path";
 
 // src/node/dev.ts
 import { createServer as createViteDevServer } from "vite";
@@ -107,34 +101,6 @@ function pluginIndexHtml() {
 
 // src/node/dev.ts
 import pluginReact from "@vitejs/plugin-react";
-
-// src/node/config.ts
-import fs from "fs-extra";
-import { resolve } from "path";
-import { loadConfigFromFile } from "vite";
-function getUserConfigPath(root) {
-  try {
-    const supportConfigFiles = ["config.ts", "config.js"];
-    const configPath = supportConfigFiles.map((file) => resolve(root, file)).find(fs.pathExistsSync);
-    return configPath;
-  } catch (e) {
-    console.error(`Failed to load user config: ${e}`);
-    throw e;
-  }
-}
-async function resolveConfig(root, command, mode) {
-  const configPath = getUserConfigPath(root);
-  const result = await loadConfigFromFile({ command, mode }, configPath, root);
-  if (result) {
-    const { config: rawConfig = {} } = result;
-    const userConfig = await (typeof rawConfig === "function" ? rawConfig() : rawConfig);
-    return [configPath, userConfig];
-  } else {
-    return [configPath, {}];
-  }
-}
-
-// src/node/dev.ts
 async function createDevServer(root = process.cwd()) {
   const config = await resolveConfig(root, "serve", "development");
   console.log(config);
@@ -147,7 +113,7 @@ async function createDevServer(root = process.cwd()) {
 // src/node/build.ts
 import { build as viteBuild } from "vite";
 import { join as join2 } from "path";
-import fs2 from "fs-extra";
+import fs from "fs-extra";
 import { pathToFileURL } from "url";
 async function bundle(root) {
   const resolveViteConfig = (isServer) => {
@@ -194,9 +160,9 @@ async function renderPage(render, root, clientBundle) {
       <script type="module" src="${chunk.fileName}"></script>
     </body>
   </html>`.trim();
-  await fs2.ensureDir(join2(root, "build"));
-  await fs2.writeFile(join2(root, "build", "index.html"), html);
-  await fs2.remove(join2(root, ".temp"));
+  await fs.ensureDir(join2(root, "build"));
+  await fs.writeFile(join2(root, "build", "index.html"), html);
+  await fs.remove(join2(root, ".temp"));
 }
 async function build(root = process.cwd()) {
   const [clientBundle, serverBundle] = await bundle(root);
@@ -209,14 +175,14 @@ async function build(root = process.cwd()) {
 var version = require_package().version;
 var cli = cac("island").version(version).help();
 cli.command("[root]", "start dev server").alias("dev").action(async (root) => {
-  root = root ? path2.resolve(root) : path2.resolve();
+  root = root ? path.resolve(root) : path.resolve();
   const server = await createDevServer(root);
   await server.listen();
   server.printUrls();
 });
 cli.command("build [root]", "build for production").action(async (root) => {
   try {
-    root = root ? path2.resolve(root) : path2.resolve();
+    root = root ? path.resolve(root) : path.resolve();
     await build(root);
   } catch (e) {
     console.log(e);
