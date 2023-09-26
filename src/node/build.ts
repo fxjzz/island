@@ -1,27 +1,30 @@
+import pluginReact from '@vitejs/plugin-react'
 import { InlineConfig, build as viteBuild } from 'vite'
 import { CLIENT_ENTRY_PATH, SSR_ENTRY_PATH } from './constants'
 import type { RollupOutput } from 'rollup'
 import { join } from 'path'
 import fs from 'fs-extra'
 import { pathToFileURL } from 'url'
+import { SiteConfig } from 'shared/types'
+import { pluginConfig } from './plugin-island/config'
 
-export async function bundle(root: string) {
-  const resolveViteConfig = (isServer: boolean): InlineConfig => {
-    return {
-      mode: 'production',
-      root,
-      build: {
-        ssr: isServer, //ssr生成产物
-        outDir: isServer ? '.temp' : 'build',
-        rollupOptions: {
-          input: isServer ? SSR_ENTRY_PATH : CLIENT_ENTRY_PATH,
-          output: {
-            format: 'esm',
-          },
+export async function bundle(root: string, config: SiteConfig) {
+  const resolveViteConfig = (isServer: boolean): InlineConfig => ({
+    mode: 'production',
+    root,
+    plugins: [pluginReact(), pluginConfig(config)],
+    build: {
+      ssr: isServer, //ssr生成产物
+      outDir: isServer ? '.temp' : 'build',
+      rollupOptions: {
+        input: isServer ? SSR_ENTRY_PATH : CLIENT_ENTRY_PATH,
+        output: {
+          format: 'esm',
         },
       },
-    }
-  }
+    },
+  })
+
   try {
     const [clientBundle, serverBundle] = await Promise.all([
       viteBuild(resolveViteConfig(false)),
@@ -57,8 +60,8 @@ export async function renderPage(render: () => string, root: string, clientBundl
 }
 
 //构建--核心逻辑。
-export async function build(root: string = process.cwd()) {
-  const [clientBundle, serverBundle] = await bundle(root)
+export async function build(root: string, config: SiteConfig) {
+  const [clientBundle, serverBundle] = await bundle(root, config)
 
   const serverEntryPath = join(root, '.temp', 'ssr-entry.js')
   const { render } = await import(pathToFileURL(serverEntryPath).toString())

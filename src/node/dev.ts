@@ -7,10 +7,10 @@ import { PACKAGE_ROOT } from './constants'
 
 export async function createDevServer(root: string, restartServer: () => Promise<void>) {
   const config = await resolveConfig(root, 'serve', 'development')
-  console.log(config.siteData)
+  //console.log(config.siteData)
 
   return createViteDevServer({
-    root,
+    root: PACKAGE_ROOT,
     plugins: [pluginIndexHtml(), pluginReact(), pluginConfig(config, restartServer)],
     server: {
       fs: {

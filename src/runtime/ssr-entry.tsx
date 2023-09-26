@@ -1,7 +1,12 @@
 import { App } from './App'
 import { renderToString } from 'react-dom/server'
+import { StaticRouter } from 'react-router-dom/server'
 
-//服务端build
+// For ssr component render
 export function render() {
-  return renderToString(<App />)
+  return renderToString(
+    <StaticRouter location={'/b'}>
+      <App />
+    </StaticRouter>
+  )
 }

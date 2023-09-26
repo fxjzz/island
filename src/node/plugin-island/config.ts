@@ -1,10 +1,11 @@
 import { Plugin, normalizePath } from 'vite'
 import { SiteConfig } from 'shared/types'
-import { relative } from 'path'
+import { join, relative } from 'path'
+import { PACKAGE_ROOT } from 'node/constants'
 
 const SITE_DATA_ID = 'island:site-data'
 
-export function pluginConfig(config: SiteConfig, restartServer: () => Promise<void>): Plugin {
+export function pluginConfig(config: SiteConfig, restartServer?: () => Promise<void>): Plugin {
   return {
     name: 'island:config',
     resolveId(id) {
@@ -18,17 +19,28 @@ export function pluginConfig(config: SiteConfig, restartServer: () => Promise<vo
       }
     },
     async handleHotUpdate(ctx) {
+      console.log(ctx)
+
       const customWatchedFiles = [normalizePath(config.configPath)]
       const include = (id: string) => customWatchedFiles.some((file) => id.includes(file))
 
       if (include(ctx.file)) {
         console.log(`\n${relative(config.root, ctx.file)} changed, restarting server...`)
-        // 重点: 重启 Dev Server
+        // 重启 Dev Server
         try {
           await restartServer()
         } catch (error) {
           console.log(error)
         }
+      }
+    },
+    config() {
+      return {
+        resolve: {
+          alias: {
+            '@runtime': join(PACKAGE_ROOT, 'src', 'runtime', 'index.ts'),
+          },
+        },
       }
     },
   }

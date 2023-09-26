@@ -1,6 +1,7 @@
 import { cac } from 'cac'
 import * as path from 'path'
 import { build } from './build'
+import { resolveConfig } from './config'
 
 const version = require('../../package.json').version
 
@@ -23,8 +24,9 @@ cli.command('dev [root]', 'start dev server').action(async (root: string) => {
 cli.command('build [root]', 'build for production').action(async (root: string) => {
   try {
     //绝对路径
-    root = root ? path.resolve(root) : path.resolve()
-    await build(root)
+    root = path.resolve(root)
+    const config = await resolveConfig(root, 'build', 'production')
+    await build(root, config)
   } catch (e) {
     console.log(e)
   }
