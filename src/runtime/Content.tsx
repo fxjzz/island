@@ -2,6 +2,7 @@ import { useRoutes } from 'react-router-dom'
 import { Index } from '../../docs/guide'
 import { A } from '../../docs/guide/a'
 import { B } from '../../docs/B'
+//import {routes} from 'island:routes'
 
 const routes = [
   {

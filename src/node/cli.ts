@@ -2,6 +2,7 @@ import { cac } from 'cac'
 import * as path from 'path'
 import { build } from './build'
 import { resolveConfig } from './config'
+import { RouteService } from './plugin-routes/RouteService'
 
 const version = require('../../package.json').version
 
@@ -25,8 +26,10 @@ cli.command('build [root]', 'build for production').action(async (root: string) 
   try {
     //绝对路径
     root = path.resolve(root)
-    const config = await resolveConfig(root, 'build', 'production')
-    await build(root, config)
+    const x = new RouteService(root)
+    await x.init()
+    // const config = await resolveConfig(root, 'build', 'production')
+    // await build(root, config)
   } catch (e) {
     console.log(e)
   }
