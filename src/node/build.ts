@@ -1,4 +1,3 @@
-import pluginReact from '@vitejs/plugin-react'
 import { InlineConfig, build as viteBuild } from 'vite'
 import { CLIENT_ENTRY_PATH, SSR_ENTRY_PATH } from './constants'
 import type { RollupOutput } from 'rollup'
@@ -6,13 +5,13 @@ import { join } from 'path'
 import fs from 'fs-extra'
 import { pathToFileURL } from 'url'
 import { SiteConfig } from 'shared/types'
-import { pluginConfig } from './plugin-island/config'
+import { createVitePlugins } from './vitePlugins'
 
 export async function bundle(root: string, config: SiteConfig) {
   const resolveViteConfig = (isServer: boolean): InlineConfig => ({
     mode: 'production',
     root,
-    plugins: [pluginReact(), pluginConfig(config)],
+    plugins: createVitePlugins(config),
     build: {
       ssr: isServer, //ssr生成产物
       outDir: isServer ? '.temp' : 'build',
