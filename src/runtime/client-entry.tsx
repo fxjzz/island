@@ -1,6 +1,5 @@
 import { createRoot } from 'react-dom/client'
 import { App } from './App'
-import siteData from 'island:site-data'
 import { BrowserRouter } from 'react-router-dom'
 
 function renderInBrowser() {
