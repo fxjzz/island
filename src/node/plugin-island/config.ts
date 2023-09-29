@@ -19,8 +19,6 @@ export function pluginConfig(config: SiteConfig, restartServer?: () => Promise<v
       }
     },
     async handleHotUpdate(ctx) {
-      console.log(ctx)
-
       const customWatchedFiles = [normalizePath(config.configPath)]
       const include = (id: string) => customWatchedFiles.some((file) => id.includes(file))
 

@@ -1,3 +1,3 @@
-export function B() {
+export default function B() {
   return <div>bbb</div>
 }

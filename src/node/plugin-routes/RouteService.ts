@@ -20,8 +20,6 @@ export class RouteService {
       .sort()
     files.forEach((file) => {
       const fileRelativePath = normalizePath(path.relative(this.scanDir, file))
-      console.log(fileRelativePath)
-
       // 1. 路由路径
       const routePath = this.normalizeRoutePath(fileRelativePath)
       // 2. 文件绝对路径
@@ -30,9 +28,26 @@ export class RouteService {
         absolutePath: file,
       })
     })
-    console.log(this.routeData)
   }
 
+  generateRoutesCode() {
+    return `
+  import React from 'react';
+  import loadable from '@loadable/component';
+  ${this.routeData
+    .map((route, index) => {
+      return `const Route${index} = loadable(() => import('${route.absolutePath}'));`
+    })
+    .join('\n')}
+  export const routes = [
+  ${this.routeData
+    .map((route, index) => {
+      return `{ path: '${route.routePath}', element: React.createElement(Route${index}) }`
+    })
+    .join(',\n')}
+  ];
+  `
+  }
   normalizeRoutePath(rawPath: string) {
     const routePath = rawPath.replace(/\.(.*)?$/, '').replace(/index$/, '')
     return routePath.startsWith('/') ? routePath : `/${routePath}`

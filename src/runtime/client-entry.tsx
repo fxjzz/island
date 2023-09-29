@@ -16,4 +16,3 @@ function renderInBrowser() {
 }
 
 renderInBrowser()
-console.log(siteData)
