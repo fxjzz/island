@@ -17,10 +17,13 @@
   "license": "ISC",
   "devDependencies": {
     "@types/fs-extra": "^11.0.2",
+    "@types/hast": "^3.0.1",
     "@types/node": "^20.6.3",
     "rollup": "^3.29.2",
     "tsup": "^7.2.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "unified": "^11.0.3",
+    "unist-util-visit": "^5.0.0"
   },
   "dependencies": {
     "@loadable/component": "^5.15.2",

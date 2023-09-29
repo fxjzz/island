@@ -7,3 +7,6 @@ title: xxx
 
 literals www.example.com, https://example.com, and contact@example.com.
 
+```js
+console.log('111')
+```
