@@ -7,7 +7,7 @@ export async function createDevServer(root: string, restartServer: () => Promise
   const config = await resolveConfig(root, 'serve', 'development')
 
   return createViteDevServer({
-    plugins: createVitePlugins(config, restartServer),
+    plugins: await createVitePlugins(config, restartServer),
     server: {
       fs: {
         allow: [PACKAGE_ROOT],
