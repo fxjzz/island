@@ -14,6 +14,9 @@ dependencies:
   '@vitejs/plugin-react':
     specifier: ^4.0.4
     version: 4.0.4(vite@4.4.9)
+  acorn:
+    specifier: ^8.10.0
+    version: 8.10.0
   cac:
     specifier: ^6.7.14
     version: 6.7.14
@@ -23,7 +26,13 @@ dependencies:
   fs-extra:
     specifier: ^11.1.1
     version: 11.1.1
+  github-slugger:
+    specifier: ^2.0.0
+    version: 2.0.0
   hast-util-from-html:
+    specifier: ^2.0.1
+    version: 2.0.1
+  mdast-util-mdxjs-esm:
     specifier: ^2.0.1
     version: 2.0.1
   react:
@@ -64,6 +73,9 @@ devDependencies:
   '@types/hast':
     specifier: ^3.0.1
     version: 3.0.1
+  '@types/mdast':
+    specifier: ^4.0.1
+    version: 4.0.1
   '@types/node':
     specifier: ^20.6.3
     version: 20.6.3
@@ -654,7 +666,6 @@ packages:
     resolution: {integrity: sha512-IlKct1rUTJ1T81d8OHzyop15kGv9A/ff7Gz7IJgrk6jDb4Udw77pCJ+vq8oxZf4Ghpm+616+i1s/LNg/Vh7d+g==}
     dependencies:
       '@types/unist': 3.0.0
-    dev: false
 
   /@types/mdx@2.0.8:
     resolution: {integrity: sha512-r7/zWe+f9x+zjXqGxf821qz++ld8tp6Z4jUS6qmPZUXH6tfh4riXOhAqb12tWGWAevCFtMt1goLWkQMqIJKpsA==}
@@ -1592,6 +1603,19 @@ packages:
       '@types/mdast': 3.0.13
       mdast-util-from-markdown: 1.3.1
       mdast-util-to-markdown: 1.5.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /mdast-util-mdxjs-esm@2.0.1:
+    resolution: {integrity: sha512-EcmOpxsZ96CvlP03NghtH1EsLtr0n9Tm4lPUJUBccV9RwUOneqSycg19n5HGzCf+10LozMRSObtVr3ee1WoHtg==}
+    dependencies:
+      '@types/estree-jsx': 1.0.1
+      '@types/hast': 3.0.1
+      '@types/mdast': 4.0.1
+      devlop: 1.1.0
+      mdast-util-from-markdown: 2.0.0
+      mdast-util-to-markdown: 2.1.0
     transitivePeerDependencies:
       - supports-color
     dev: false
