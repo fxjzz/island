@@ -1,12 +1,27 @@
-import { useState } from 'react'
-import { Content } from '@runtime'
+import { Content, usePageData } from '../../runtime'
 import 'uno.css'
+
 export function Layout() {
-  const [count, setCount] = useState(0)
-  return (
-    <div p="5">
-      <h1>This is Layout Component1 </h1>
-      <Content />
-    </div>
-  )
+  const pageData = usePageData()
+  // 获取 pageType
+  const { pageType } = pageData
+  // 根据 pageType 分发不同的页面内容
+  const getContent = () => {
+    if (pageType === 'home') {
+      return (
+        <div>
+          <Content />
+        </div>
+      )
+    } else if (pageType === 'doc') {
+      return (
+        <div>
+          <Content />
+        </div>
+      )
+    } else {
+      return <div>404 页面</div>
+    }
+  }
+  return <div>{getContent()}</div>
 }
