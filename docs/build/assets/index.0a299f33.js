@@ -1,0 +1,13 @@
+import{j as n,a as l,F as r}from"./client-entry.01a6915d.js";import i from"./Counter.2659f454.js";const o={title:"xxx"},h=[{id:"gfm-1-link-1",text:"GFM 1 link",depth:2},{id:"xxxxxxxxautolink-1",text:"xxxxxxxxAutolink",depth:2},{id:"autolink2222-1",text:"Autolink2222",depth:2},{id:"autolink3333-3-1",text:"Autolink3333 3",depth:3}];function c(a){const e=Object.assign({h1:"h1",a:"a",h2:"h2",code:"code",h3:"h3",p:"p",div:"div",span:"span",pre:"pre"},a.components);return l(r,{children:[n(i,{}),`
+`,l(e.h1,{id:"gfm-1dd",children:[n(e.a,{className:"header-anchor",href:"#gfm-1dd",children:"#"}),"GFM 1dd"]}),`
+`,l(e.h1,{id:"gfm-1",children:[n(e.a,{className:"header-anchor",href:"#gfm-1",children:"#"}),"GFM 1"]}),`
+`,l(e.h2,{id:"gfm-1-link",children:[n(e.a,{className:"header-anchor",href:"#gfm-1-link",children:"#"}),"GFM 1 ",n(e.a,{href:"https://islandjs.dev",children:"link"})]}),`
+`,l(e.h2,{id:"xxxxxxxxautolink",children:[n(e.a,{className:"header-anchor",href:"#xxxxxxxxautolink",children:"#"}),"xxxxxxxx",n(e.code,{children:"Autolink"})]}),`
+`,l(e.h2,{id:"autolink2222",children:[n(e.a,{className:"header-anchor",href:"#autolink2222",children:"#"}),"Autolink2222"]}),`
+`,l(e.h3,{id:"autolink3333-3",children:[n(e.a,{className:"header-anchor",href:"#autolink3333-3",children:"#"}),"Autolink3333 3"]}),`
+`,l(e.p,{children:["literals ",n(e.a,{href:"http://www.example.com",children:"www.example.com"}),", ",n(e.a,{href:"https://example.com",children:"https://example.com"}),", and ",n(e.a,{href:"mailto:contact@example.com",children:"contact@example.com"}),"."]}),`
+`,l(e.div,{className:"language-js",children:[n(e.span,{className:"lang",children:"js"}),n(e.pre,{className:"shiki",style:{backgroundColor:"#2e3440ff"},children:l(e.code,{children:[l(e.span,{className:"line",children:[n(e.span,{style:{color:"#D8DEE9"},children:"console"}),n(e.span,{style:{color:"#ECEFF4"},children:"."}),n(e.span,{style:{color:"#88C0D0"},children:"log"}),n(e.span,{style:{color:"#D8DEE9FF"},children:"("}),n(e.span,{style:{color:"#ECEFF4"},children:"'"}),n(e.span,{style:{color:"#A3BE8C"},children:"111"}),n(e.span,{style:{color:"#ECEFF4"},children:"'"}),n(e.span,{style:{color:"#D8DEE9FF"},children:")"})]}),`
+`,n(e.span,{className:"line"}),`
+`,n(e.span,{className:"line"}),`
+`,l(e.span,{className:"line",children:[n(e.span,{style:{color:"#81A1C1"},children:"<"}),n(e.span,{style:{color:"#8FBCBB"},children:"Counter"}),n(e.span,{style:{color:"#D8DEE9FF"},children:" "}),n(e.span,{style:{color:"#81A1C1"},children:"/>"})]}),`
+`,n(e.span,{className:"line"})]})})]})]})}function d(a={}){const{wrapper:e}=a.components||{};return e?n(e,Object.assign({},a,{children:n(c,a)})):c(a)}export{d as default,o as frontmatter,h as toc};

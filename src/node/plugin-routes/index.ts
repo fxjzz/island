@@ -3,6 +3,7 @@ import { RouteService } from './RouteService'
 
 export interface RoutesConfig {
   root: string
+  isSSR: boolean
 }
 
 const CONVENTIONAL_ROUTE_ID = 'island:routes'
@@ -23,7 +24,7 @@ export function pluginRoutes(config: RoutesConfig): Plugin {
     },
     load(id) {
       if (id === '\0' + CONVENTIONAL_ROUTE_ID) {
-        return routeService.generateRoutesCode()
+        return routeService.generateRoutesCode(config.isSSR || false)
       }
     },
   }

@@ -26,11 +26,8 @@ cli.command('build [root]', 'build for production').action(async (root: string) 
   try {
     //绝对路径
     root = path.resolve(root)
-    const x = new RouteService(root)
-    await x.init()
-
-    // const config = await resolveConfig(root, 'build', 'production')
-    // await build(root, config)
+    const config = await resolveConfig(root, 'build', 'production')
+    await build(root, config)
   } catch (e) {
     console.log(e)
   }
