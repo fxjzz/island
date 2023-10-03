@@ -82,6 +82,5 @@ export const remarkPluginToc: Plugin<[], Root> = () => {
         }) as unknown as Program,
       },
     } as MdxjsEsm)
-    console.log(insertCode)
   }
 }

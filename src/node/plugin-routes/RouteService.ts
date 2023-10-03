@@ -12,7 +12,7 @@ export class RouteService {
 
   async init() {
     const files = fg
-      .sync(['**/*.{js,jsx,ts,tsx,md}'], {
+      .sync(['**/*.{js,jsx,ts,tsx,md,mdx}'], {
         cwd: this.scanDir,
         absolute: true,
         ignore: ['**/node_modules/**', '**/build/**', 'config.{js,ts}'],
