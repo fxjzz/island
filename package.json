@@ -16,6 +16,7 @@
   "author": "fxjzz",
   "license": "ISC",
   "devDependencies": {
+    "@iconify-json/carbon": "^1.1.21",
     "@mdx-js/mdx": "^2.1.5",
     "@types/fs-extra": "^9.0.13",
     "@types/hast": "^2.3.4",
@@ -33,6 +34,7 @@
     "remark-rehype": "^10.1.0",
     "remark-stringify": "^10.0.2",
     "rollup": "^3.2.3",
+    "sass": "^1.68.0",
     "serve": "^14.0.1",
     "tsup": "^6.5.0",
     "tsx": "^3.12.1",
