@@ -1,5 +1,7 @@
 import { Content, usePageData } from '../../runtime'
 import 'uno.css'
+import '../styles/base.css'
+import '../styles/vars.css'
 
 export function Layout() {
   const pageData = usePageData()
