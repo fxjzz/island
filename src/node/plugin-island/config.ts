@@ -3,7 +3,6 @@ import { SiteConfig } from 'shared/types'
 import { join, relative } from 'path'
 import { PACKAGE_ROOT } from 'node/constants'
 import sirv from 'sirv'
-import * as fs from 'fs-extra'
 
 const SITE_DATA_ID = 'island:site-data'
 

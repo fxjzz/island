@@ -10,16 +10,18 @@ export function App() {
 }
 
 export async function initPageData(routePath: string): Promise<PageData> {
-  const matched = matchRoutes(routes, routePath)
-  console.log(matched)
+  console.log(routes, routePath)
 
+  const matched = matchRoutes(routes, routePath)
   //todo
+
   if (matched) {
     const route = matched[0].route as Route
     const moduleInfo = await route.preload()
+    console.log(moduleInfo.frontmatter?.pageType)
 
     return {
-      pageType: moduleInfo.frontmatter.pageType ?? 'doc',
+      pageType: moduleInfo.frontmatter?.pageType ?? 'doc',
       siteData,
       frontmatter: moduleInfo.frontmatter,
       pagePath: routePath,

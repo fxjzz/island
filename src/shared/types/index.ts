@@ -29,6 +29,11 @@ export interface SidebarMulti {
   [path: string]: SidebarItem[]
 }
 
+export interface SidebarGroup {
+  text?: string
+  items: SidebarItem[]
+}
+
 export type SidebarItem = {
   text?: string
   link?: string
