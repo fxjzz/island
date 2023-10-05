@@ -59,6 +59,9 @@ dependencies:
   shiki:
     specifier: ^0.11.1
     version: 0.11.1
+  sirv:
+    specifier: ^2.0.3
+    version: 2.0.3
   unocss:
     specifier: ^0.56.5
     version: 0.56.5(postcss@8.4.30)(rollup@3.29.2)(vite@3.2.7)

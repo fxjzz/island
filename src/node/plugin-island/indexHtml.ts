@@ -23,6 +23,7 @@ export function pluginIndexHtml(): Plugin {
       }
     },
     configureServer(server) {
+      //后置中间件
       return () => {
         server.middlewares.use(async (req, res, next) => {
           let html = await readFile(DEFAULT_TEMPLATE_PATH, 'utf-8')
