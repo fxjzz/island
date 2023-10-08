@@ -6,6 +6,7 @@ import fs from 'fs-extra'
 import { pathToFileURL } from 'url'
 import { SiteConfig } from 'shared/types'
 import { createVitePlugins } from './vitePlugins'
+import { RenderResult } from 'runtime/ssr-entry'
 
 export async function bundle(root: string, config: SiteConfig) {
   const resolveViteConfig = async (isServer: boolean): Promise<InlineConfig> => ({
@@ -36,7 +37,7 @@ export async function bundle(root: string, config: SiteConfig) {
 }
 
 export async function renderPage(
-  render: (url: string) => string,
+  render: (url: string) => RenderResult,
   routes: Array<any>,
   root: string,
   clientBundle: RollupOutput
@@ -46,7 +47,7 @@ export async function renderPage(
   return Promise.all(
     routes.map(async (route) => {
       const routePath = route.path
-      const appHtml = render(routePath)
+      const { appHtml } = await render(routePath)
       const html = `
   <!DOCTYPE html>
   <html>
@@ -70,7 +71,7 @@ export async function renderPage(
 
 //构建--核心逻辑。
 export async function build(root: string, config: SiteConfig) {
-  const [clientBundle, serverBundle] = await bundle(root, config)
+  const [clientBundle] = await bundle(root, config)
 
   const serverEntryPath = join(root, '.temp', 'ssr-entry.js')
   const { render, routes } = await import(pathToFileURL(serverEntryPath).toString())
