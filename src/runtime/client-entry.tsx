@@ -8,7 +8,6 @@ async function renderInBrowser() {
   if (!containerEl) {
     throw new Error('#root element not found')
   }
-  console.log(location.pathname)
   const pageData = await initPageData(location.pathname)
   createRoot(containerEl).render(
     //全局content pageData

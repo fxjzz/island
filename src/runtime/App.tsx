@@ -10,8 +10,6 @@ export function App() {
 }
 
 export async function initPageData(routePath: string): Promise<PageData> {
-  console.log(routes, routePath)
-
   const matched = matchRoutes(routes, routePath)
   //todo
 
