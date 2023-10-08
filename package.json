@@ -44,6 +44,10 @@
     "unist-util-visit": "^4.1.1"
   },
   "dependencies": {
+    "@babel/core": "^7.23.0",
+    "@babel/helper-plugin-utils": "^7.22.5",
+    "@babel/preset-react": "^7.22.15",
+    "@babel/traverse": "^7.23.0",
     "@iconify-json/carbon": "^1.1.13",
     "@loadable/component": "^5.15.2",
     "@mdx-js/rollup": "2.1.3",
