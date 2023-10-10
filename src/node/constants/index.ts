@@ -9,3 +9,5 @@ export const CLIENT_ENTRY_PATH = join(PACKAGE_ROOT, 'src', 'runtime', 'client-en
 export const SSR_ENTRY_PATH = join(PACKAGE_ROOT, 'src', 'runtime', 'ssr-entry.tsx')
 
 export const MASK_SPLITTER = '!!ISLAND!!'
+
+export const CLIENT_OUTPUT = 'build'

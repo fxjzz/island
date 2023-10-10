@@ -16,19 +16,7 @@ export function Layout() {
     } else if (pageType === 'doc') {
       return <DocLayout />
     } else {
-      return (
-        <div>
-          404asdasdasda 页面<h1>123123</h1>
-          <h1>123123</h1>
-          <h1>123123</h1>
-          <h1>123123</h1>
-          <h1>123123</h1>
-          <h1>123123</h1>
-          <h1>123123</h1>
-          <h1>123123</h1>
-          <h1>123123</h1>
-        </div>
-      )
+      return <div>404</div>
     }
   }
   return (

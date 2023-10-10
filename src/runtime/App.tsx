@@ -24,15 +24,11 @@ export async function initPageData(routePath: string): Promise<PageData> {
       pagePath: routePath,
       toc: moduleInfo.toc,
     }
-  } else {
-    return {
-      pageType: '404',
-      siteData,
-      pagePath: routePath,
-      frontmatter: {
-        title: '404',
-        description: '页面不存在',
-      },
-    }
+  }
+  return {
+    pageType: '404',
+    siteData,
+    pagePath: routePath,
+    frontmatter: {},
   }
 }
