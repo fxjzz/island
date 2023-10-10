@@ -11,6 +11,5 @@ export default defineConfig({
   minify: process.env.NODE_ENV === 'production',
   outDir: 'dist',
   format: ['cjs', 'esm'],
-  dts: true,
   shims: true,
 })

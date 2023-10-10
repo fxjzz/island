@@ -1,5 +1,12 @@
 import { InlineConfig, build as viteBuild } from 'vite'
-import { CLIENT_ENTRY_PATH, CLIENT_OUTPUT, MASK_SPLITTER, SSR_ENTRY_PATH } from './constants'
+import {
+  CLIENT_ENTRY_PATH,
+  CLIENT_OUTPUT,
+  EXTERNALS,
+  MASK_SPLITTER,
+  PACKAGE_ROOT,
+  SSR_ENTRY_PATH,
+} from './constants'
 import type { RollupOutput } from 'rollup'
 import path, { dirname, join } from 'path'
 import fs from 'fs-extra'
@@ -22,6 +29,7 @@ export async function bundle(root: string, config: SiteConfig) {
         output: {
           format: 'esm',
         },
+        external: EXTERNALS,
       },
     },
   })
@@ -35,6 +43,7 @@ export async function bundle(root: string, config: SiteConfig) {
     if (fs.pathExistsSync(publicDir)) {
       await fs.copy(publicDir, join(root, CLIENT_OUTPUT))
     }
+    await fs.copy(join(PACKAGE_ROOT, 'vendors'), join(root, CLIENT_OUTPUT))
     return [clientBundle, serverBundle] as [RollupOutput, RollupOutput]
   } catch (e) {
     console.log(e)
@@ -66,8 +75,15 @@ export async function renderPage(
       <meta name="viewport" content="width=device-width,initial-scale=1">
       <title>title</title>
       <meta name="description" content="xxx">
-      ${styleAssets.map((item) => `<link rel="stylesheet" href="./${item.fileName}">`).join('\n')}
-    </head>
+      ${styleAssets.map((item) => `<link rel="stylesheet" href="/${item.fileName}">`).join('\n')}
+      <script type="importmap">
+      {
+        "imports": {
+          ${EXTERNALS.map((name) => `"${name}": "/${normalizeVendorFilename(name)}"`).join(',')}
+        }
+      }
+      </script>
+      </head>
     <body>
       <div id="root">${appHtml}</div>
       <script type="module">${islandsCode}</script>
@@ -109,11 +125,15 @@ window.ISLAND_PROPS = JSON.parse(
   const injectId = 'island:inject'
   return viteBuild({
     mode: 'production',
+    esbuild: {
+      jsx: 'automatic',
+    },
     build: {
       // 输出目录
       outDir: path.join(root, '.temp'),
       rollupOptions: {
         input: injectId,
+        external: EXTERNALS,
       },
     },
     plugins: [
@@ -147,3 +167,5 @@ window.ISLAND_PROPS = JSON.parse(
     ],
   })
 }
+
+const normalizeVendorFilename = (fileName: string) => fileName.replace(/\//g, '_') + '.js'

@@ -11,3 +11,5 @@ export const SSR_ENTRY_PATH = join(PACKAGE_ROOT, 'src', 'runtime', 'ssr-entry.ts
 export const MASK_SPLITTER = '!!ISLAND!!'
 
 export const CLIENT_OUTPUT = 'build'
+
+export const EXTERNALS = ['react', 'react-dom', 'react-dom/client', 'react/jsx-runtime']
