@@ -40,7 +40,7 @@ export function Nav() {
             ))}
           </li>
           <li before="menu-item-before" flex="~">
-            <SwitchAppearance />
+            <SwitchAppearance __island />
           </li>
           <li className={styles.socialLinkIcon} before="menu-item-before">
             <a href="/">

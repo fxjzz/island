@@ -59,7 +59,7 @@ export async function renderPage(
 ) {
   const chunk = clientBundle.output.find((chunk) => chunk.type === 'chunk' && chunk.isEntry)
   return Promise.all(
-    routes.map(async (route) => {
+    [...routes, { path: '/404' }].map(async (route) => {
       const routePath = route.path
 
       const helmetContext = {
@@ -126,7 +126,7 @@ async function buildIslands(root: string, islandPathToMap: Record<string, string
   // 根据 islandPathToMap 拼接模块代码内容
   const islandsInjectCode = `
     ${Object.entries(islandPathToMap)
-      .map(([islandName, islandPath]) => `import { ${islandName} } from '${islandPath}'`)
+      .map(([islandName, islandPath]) => `import { ${islandName} } from '${islandPath}';`)
       .join('')}
 window.ISLANDS = { ${Object.keys(islandPathToMap).join(', ')} };
 window.ISLAND_PROPS = JSON.parse(
