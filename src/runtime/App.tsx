@@ -23,12 +23,15 @@ export async function initPageData(routePath: string): Promise<PageData> {
       frontmatter: moduleInfo.frontmatter,
       pagePath: routePath,
       toc: moduleInfo.toc,
+      title: moduleInfo.title,
     }
-  }
-  return {
-    pageType: '404',
-    siteData,
-    pagePath: routePath,
-    frontmatter: {},
+  } else {
+    return {
+      pageType: '404',
+      siteData,
+      pagePath: routePath,
+      frontmatter: {},
+      title: '404',
+    }
   }
 }
