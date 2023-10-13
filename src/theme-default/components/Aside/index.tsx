@@ -8,8 +8,8 @@ interface AsideProps {
 }
 
 export function Aside(props: AsideProps & PropsWithIsland) {
-  const { headers = [] } = props
-  //const headers = useHeaders(rawHeaders)
+  const { headers: rawHeaders = [] } = props
+  const headers = useHeaders(rawHeaders)
   const hasOutline = headers.length > 0
 
   useEffect(() => {

@@ -31,7 +31,7 @@ export function pluginMdxHMR(): Plugin {
           type: 'custom',
           event: 'mdx-changed',
           data: {
-            filePath: ctx.file,
+            filePath: ctx.file.slice(21),
             time: ctx.timestamp,
           },
         })
