@@ -43,7 +43,7 @@ export function Nav() {
             <SwitchAppearance __island />
           </li>
           <li className={styles.socialLinkIcon} before="menu-item-before">
-            <a href="/">
+            <a href="https://github.com/fxjzz/island" target="_blank">
               <div className="i-carbon-logo-github w-5 h-5 fill-current"></div>
             </a>
           </li>

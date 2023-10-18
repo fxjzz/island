@@ -12,16 +12,14 @@ export function Sidebar(props: SidebarProps) {
   const renderGroupItem = (item: SidebarItem) => {
     const active = item.link === pathname
     return (
-      <div ml="5">
-        <div
-          p="1"
-          block="~"
-          text="sm"
-          font-medium="~"
-          className={`${active ? 'text-brand' : 'text-text-2'}`}
-        >
-          <Link href={item.link}>{item.text}</Link>
-        </div>
+      <div
+        p="1"
+        block="~"
+        text="sm"
+        font-medium="~"
+        className={`${active ? 'text-brand' : 'text-text-2'}`}
+      >
+        <Link href={item.link}>{item.text}</Link>
       </div>
     )
   }

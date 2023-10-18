@@ -10,10 +10,8 @@ $sidebarPadding: calc(32px + (100vw - var(--island-layout-max-width)) / 2);
     var(--island-sidebar-width) + ((100vw - var(--island-layout-max-width)) / 2) +
       48px
   );
-  margin-right: $sidebarPadding;
   // 100 vw - sidebar 的宽度
   // sidebar 的宽度为
-  max-width: calc(100vw - $sidebarWidth);
 }
 
 .doc-content {

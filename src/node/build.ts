@@ -85,7 +85,6 @@ export async function renderPage(
       ${helmet?.meta?.toString() || ''}
       ${helmet?.link?.toString() || ''}
       ${helmet?.style?.toString() || ''}
-      <meta name="description" content="xxx">
       ${styleAssets.map((item) => `<link rel="stylesheet" href="/${item.fileName}">`).join('\n')}
       <script type="importmap">
       {
